@@ -1,0 +1,42 @@
+.data{
+    display: flex;
+    justify-content: center;
+}
+
+select{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+#donwload{
+  font-size: 18px;
+}
+#lixeira{
+  font-size: 20px;
+}
+#inv{
+    display:none;
+}
+#ferias{
+    max-width: 90px;
+}
+select:hover{
+    cursor: pointer;
+}
+#excluir{
+    width: 25px;
+}
+
+
+.modal{
+    color: white;
+  }
+  .modal-footer{
+    justify-content: center;
+  }
+  .modal-dialog{
+    background-color: white;
+  }
+  .modal-content{
+    background-color: #0948a7;
+  }
+  

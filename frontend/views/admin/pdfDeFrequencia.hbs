@@ -1,0 +1,89 @@
+<link rel="stylesheet" href="/css/admin/pdf.css">
+
+<div class="row mt-4 ">
+    <div class="col">
+        <button type="button" id="downloadPdf" class="btn btn-primary"
+            onclick="baixarPdf('{{mesAtual2}}', '{{anoAtual}}', '{{nome}}', '{{matricula}}', '{{cargo}}')">Downloada
+            PDF</button>
+    </div>
+    <div class="col-12 mt-4">
+        <table id="tabela">
+            <tr>
+                <th id="data">DATA</th>
+                <th id="diaDaSemana">DIAS DA SEMANA</th>
+                <th id="horario" colspan=2>HORARIO</th>
+                <th id="assinatura">ASSINATURA</th>
+            </tr>
+            <tr>
+                <td id="coluna"></td>
+                <td id="coluna"></td>
+                <td id="coluna">ENTRADA</td>
+                <td id="coluna">SAIDA</td>
+                <td id="coluna"></td>
+            </tr>
+            {{#each dados}}
+            <tr>
+                <td id="data">{{dia}}</td>
+                <td id="diaDaSemana">{{diaDasemana}}</td>
+                <td>{{entrada}}</td>
+                <td>{{saida}}</td>
+                <td>{{#if feriado}}{{#if ausencia}}{{feriado}}/{{ausencia}}{{else}}{{feriado}}{{/if}}{{else}}{{#if
+                    ausencia}}{{ausencia}}{{/if}}{{/if}} </td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"
+    integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs"
+    crossorigin="anonymous"></script>
+<script src="/dom-to-image-master/dist/dom-to-image.min.js"></script>
+<script>
+
+    function baixarPdf(mes, ano, nome, matricula, cargo) {
+        const tabela = document.getElementById("tabela")
+        domtoimage.toPng(tabela).then(async url => {
+            const mesGrandes = ['Dezembro', 'Fervereiro', 'Setembro', 'Novembro']
+            const mesNormais = ['Janeiro', 'Agosto', 'Outubro']
+            const mesMedios = ['Março', 'Junho', 'Julho']
+            const mesPequenos = ['Abril', 'Maio']
+            var img = new Image();
+            img.src = url
+            const pdf = new jsPDF('portrait', 'pt', 'a4');
+            pdf.addImage('/imagens/semtabela.jpg', 'JPG', 0, 0, 590, 850)
+            pdf.addImage('/imagens/POLO.png', 'PNG', 35, 0, 100, 57)
+            pdf.addImage('/imagens/SEC_Vertical.png', 'PNG', 130, 0, 70, 60)
+            pdf.addImage(img, 'PNG', 35, 150)
+            pdf.setFontSize(12)
+            if (mesGrandes.includes(mes)) {
+                pdf.text(ano, 168, 98)
+                pdf.text('/', 160, 98)
+            }
+            if (mesNormais.includes(mes)) {
+                pdf.text(ano, 149, 98)
+                pdf.text('/', 143, 98)
+            }
+            if (mesMedios.includes(mes)) {
+                pdf.text(ano, 139, 98)
+                pdf.text('/', 134, 98)
+            }
+            if (mesPequenos.includes(mes)) {
+                pdf.text(ano, 136, 98)
+                pdf.text('/', 128, 98)
+            }
+            pdf.text(mes, 100, 98)
+            pdf.setFontSize(11)
+            pdf.text(nome, 104, 110)
+            pdf.text(matricula, 421, 110)
+            pdf.text(cargo, 160, 121)
+            pdf.save(`${nome}-${mes}-${ano}.pdf`)
+
+        }).catch(erro => {
+            console.log(erro)
+        })
+    }
+
+    document.getElementById("downloadPdf").click()
+
+</script>

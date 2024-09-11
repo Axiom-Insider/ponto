@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="/css/home.css">
+<div class="row">
+    <div class="col-12 mt-4">
+        <h6><strong>Nome:</strong>{{nome}}</h6>
+        <h6><strong>Matricula:</strong>{{matricula}}</h6>
+    </div>
+    <div class="box" style="background-color: {{#if saida }} green {{/if}};">
+        <div class="col-6">
+            <strong>Entrada:</strong>{{#if entrada}} <i class="bi bi-check"></i> {{else}}  <i class="bi bi-x"></i> {{/if}}
+            <strong>Saida:</strong>{{#if saida}} <i class="bi bi-check"></i> {{else}} <i class="bi bi-x"></i> {{/if}}
+        </div>
+    </div>
+</div>
+</div>

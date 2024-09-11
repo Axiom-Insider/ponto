@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="/css/admin/home.css">
+
+
+<div class="box">
+    <div class="row">
+        <div class="col-md-12 ">
+            {{#each funcAprovados}}
+            <div class="alert alert-success" id="alerta">
+                <i class="bi bi-check-circle-fill"></i>
+                <strong>{{nome}} ||</strong>
+                <strong> Entrada:{{#if entrada}} {{hora_entrada}} {{else}} Sem Registro {{/if}} ||</strong>
+                <strong> Saída:{{#if saida}} {{hora_saida}} {{else}} Sem Registro {{/if}} </strong>
+            </div>
+            {{else}}
+                <h1>Nenhum registro de horário de entrada</h1>
+            {{/each}}
+            <hr>
+            {{#each funcReprovados}}
+            <div style="" class="alert alert-secondary mt-2" id="alerta">
+                <i class="bi bi-info-circle-fill"></i>
+                <strong>{{nome}} ||</strong>
+                 <strong>{{matricula}} ||</strong>
+                <strong> Entrada:{{#if entrada}} {{hora_entrada}} {{else}} Sem Registro {{/if}} ||</strong>
+                <strong> Saída:{{#if saida}} {{hora_saida}} {{else}} Sem Registro {{/if}} </strong>
+            </div>
+            {{else}}
+                <h1>...</h1>
+            {{/each}}
+           
+        </div>
+    </div>
+</div>

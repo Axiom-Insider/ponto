@@ -1,0 +1,12 @@
+{
+    "apps":[
+        {
+            "name":"pontoFrontend",
+            "script": "./server.js"
+        },
+        {
+            "name":"pontoBackend",
+            "script": "../backend/src/server.js"
+        }
+    ]
+}

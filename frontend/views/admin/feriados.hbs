@@ -1,0 +1,79 @@
+<div class="row mt-4">
+    <div class="col">
+        <h1>Nacional</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-8 ">
+        <table class="table table-bordered table-dark mt-2">
+            <thead>
+                <tr>
+                    <th class="">Nome</th>
+                    <!-- <th class=""></th> -->
+                    <th class="text-center">Opções</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each nacionais}}
+                <tr>
+                    <td>{{nome}}</td>
+                    <!--  <td>{{data}} {{#if dataSec}} - {{dataSec}} {{/if}}</td> -->
+                    <td class="text-center">
+                        <a href="/PoloUAB/adm/feriados-excluir/{{id}}" class="btn btn-danger" data-toggle="tooltip"
+                            data-placement="top" title="Excluir"><i class="bi bi-trash3-fill"></i></a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<div class="row mt-2">
+    <div class="col">
+        <h1></h1>
+    </div>
+</div>
+
+<form id="form" method="GET">
+    <div class="row">
+        <div class="col-2">
+            <strong>Ano:</strong>
+            <select name="ano" id="ano" class="form-control">
+                {{#each anos}}
+                <option value="{{ano}}" {{#if select}} selected {{/if}}>{{ano}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+</form>
+<div class="row">
+    <div class="col-8">
+        <table class="table table-bordered table-dark mt-4">
+            <thead>
+                <tr>
+                    <th class="">Nome</th>
+                    <th class="">Data</th>
+                    <th class="text-center">Opções</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each estaduais}}
+                <tr>
+                    <td>{{nome}}</td>
+                    <td>{{data}} {{#if dataSec}} - {{dataSec}} {{/if}}</td>
+                    <td class="text-center">
+                        <a href="/PoloUAB/adm/feriados-excluir/{{id}}" class="btn btn-danger" data-toggle="tooltip"
+                            data-placement="top" title="Excluir"><i class="bi bi-trash3-fill"></i></a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+<script src="/js/admin/feriados.js"></script>

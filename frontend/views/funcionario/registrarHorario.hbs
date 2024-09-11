@@ -1,0 +1,63 @@
+<link rel="stylesheet" href="/css/usuario/registrarHorario.css">
+
+<form method="POST" id="form">
+    <div class="box">
+
+        <div class="row">
+            <div class="col-12" id="carregar"></div>
+            <div class="col">
+                <div id="hora" class="hora">
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                {{#if entrada}}
+                {{#if saida}}
+                {{else}}
+                <button type="button" class="btn btn-danger mt-4" id="botao" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <strong>Saída</strong>
+                </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success" value="saida" name="botao" id="botao"><i class="bi bi-check2"></i></button>
+                                <button type="button" id="botao" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{/if}}
+                {{else}}
+                <button type="button" class="btn btn-success mt-4" id="botao" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <strong>Entrada</strong>
+                </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar?</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success" value="entrada" name="botao" id="botao"><i class="bi bi-check2"></i></button>
+                                <button type="button" id="botao" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</form>
+<script src="/js/usuario/registrarHorario.js"></script>

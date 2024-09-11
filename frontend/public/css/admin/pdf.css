@@ -1,0 +1,55 @@
+body{
+    background-color: white;
+}
+
+table {
+    color: black;
+    border-collapse: collapse;
+    height: 50px;
+    width: 700px;
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#coluna{
+    background-color: rgb(160, 160, 160);
+    border: 1px solid black;
+    padding: 1px;
+    text-align: center;
+}
+th {
+    background-color: rgb(160, 160, 160);
+    border: 1px solid black;
+    padding: 1px;
+    text-align: center;
+}
+
+td {
+    border: 1px solid black;
+    padding: 1px;
+    text-align: center;
+}
+
+#entrada {
+    word-spacing: 4px;
+}
+
+#data {
+    width: 30px;
+}
+
+#diaDaSemana {
+    width: 200px;
+}
+
+#horario {
+    width: 100px;
+}
+
+#horario2 {
+    width: 50px;
+}
+
+#assinatura {
+    width: 350px;
+}

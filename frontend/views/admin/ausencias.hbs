@@ -1,0 +1,45 @@
+
+<form id="form" class="mt-4" method="GET">
+    <div class="row">
+        <div class="col-2">
+            <strong>Ano:</strong>
+            <select name="ano" id="ano" class="form-control">
+                {{#each anos}}
+                <option value="{{ano}}" {{#if select}} selected {{/if}}>{{ano}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+<div class="col-12 mt-4">
+    <table class="table table-bordered table-dark mt-4">
+        <thead>
+            <tr>
+                <th class="">Tipo</th>
+                <th class="">Data</th>
+                <th class="text-center">Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each dados}}
+            <tr>
+                <td>
+                    {{#if atestado}} Atestado {{/if}}
+                    {{#if ferias}} Ferias {{/if}}
+                </td>
+                <!--  <td>{{data}} {{#if dataSec}} - {{dataSec}} {{/if}}</td> -->
+                <td>{{#if data_saida}} {{data_entrada}} - {{data_saida}} {{else}} {{data_entrada}} {{/if}}</td>
+                <td class="text-center">
+                    <a href="/PoloUAB/adm/ausencia-excluir/{{id_ausencia}}" class="btn btn-danger" data-toggle="tooltip"
+                        data-placement="top" title="Excluir"><i class="bi bi-trash3-fill"></i></a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+</div>
+
+<script src="/js/admin/feriados.js"></script>

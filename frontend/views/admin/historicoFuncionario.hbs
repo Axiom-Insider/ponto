@@ -1,0 +1,112 @@
+<link rel="stylesheet" href="/css/usuario/historico.css">
+
+<form method="GET" id="form">
+    <div class="row mt-4">
+        <div class="col-auto">
+            <select class="form-control" name="mes" id="mes">
+                {{#each mes}}
+                <option value="{{num}}" {{#if selecionado}} selected {{/if}}>{{mes}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="col-auto">
+            <select class="form-control" name="ano" id="ano">
+                {{#each ano}}
+                <option value="{{ano}}" {{#if selecionado}} selected {{/if}}>{{ano}}</option>
+                {{/each}}
+            </select>
+        </div>
+</form>
+<div class="col-auto">
+    <form action="/PoloUAB/adm/pdf/{{id}}" method="get">
+        <input type="text" id="inv" value="{{anoAtual}}" name="ano">
+        <input type="text" id="inv" value="{{mesAtual}}" name="mes">
+        <button class="btn btn-primary" type="submit">Download Frequência <i
+                class="bi bi-file-earmark-arrow-down" id="donwload"></i></button>
+    </form>
+</div>
+{{#if registro}}
+<div class="col-12">
+    <table class="table table-bordered table-dark mt-4">
+        <thead>
+            <tr>
+                <th class="text-center">Dia</th>
+                <th class="text-center">Feriados</th>
+                <th id="ferias" class="text-center">Férias/Atestados</th>
+                <th class="text-center">Entrada</th>
+                <th class="text-center">Saída</th>
+                <th class="text-center">Hora Trabalhada</th>
+                <th id="excluir"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each dados}}
+            {{#if totalH}}
+            <tr>
+                <td class="">Hora Total Trabalhada</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="text-center">{{totalH}}</td>
+                <td></td>
+            </tr>
+              
+            {{else}}
+                        <tr>
+                <td>{{diaDasemana}} - {{dia}}</td>
+                <td class="text-center">{{feriado}}</td>
+                <td class="text-center">{{ausencia}}</td>
+                <td class="text-center">{{#if entrada}} {{entrada}} {{else}} {{#if fds}}
+                    <strong>--------</strong> {{/if}} {{/if}}
+                </td>
+                <td class="text-center">{{#if saida}} {{saida}} {{else}} {{#if fds}}
+                    <strong>--------</strong> {{/if}} {{/if}}
+                </td>
+                <td class="text-center">{{horasT}}{{totalH}}</td>
+                <td>
+                    <form id="form{{idHorario}}" action="/polouab/adm/entrada-saida" method="POST" >
+                        <input type="text" value="" id="inv" name="mes">
+                        <input type="text" value="" id="inv" name="ano">
+                        <input type="text" value="{{id}}" id="inv" name="idUser">
+                        <input type="text" value="{{idHorario}}" id="inv" name="idHorario">
+                        <button type="button" class="btn btn-danger" id="botao" data-bs-toggle="modal"
+                            data-bs-target="#modal{{idHorario}}" data-toggle="tooltip"
+                            data-placement="top" title="Excluir">
+                            <span id="lixeira" class="bi bi-trash3 "></span>
+                        </button>
+
+
+                        <div class="modal fade" id="modal{{idHorario}}" tabindex="-1" aria-labelledby="exampleModalLabel1"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Apagar qual registro?</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="text" id="inv" class="opcao" name="opcao">
+                                        <button type="button" onclick="enviarFormulario({{idHorario}}, 'entrada')" class="btn btn-primary"
+                                            id="botao">Entrada</button>
+                                        <button type="button" onclick="enviarFormulario({{idHorario}}, 'saida')" id="botao" class="btn btn-primary" data-bs-dismiss="modal">Saida</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+            {{/if}}
+
+            {{/each}}
+            {{else}}
+            <h1 class="mt-4">Sem registros...</h1>
+            {{/if}}
+        </tbody>
+    </table>
+</div>
+</div>
+
+ <script src="/js/admin/historico.js"></script> 
