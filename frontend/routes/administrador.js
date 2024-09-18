@@ -21,8 +21,9 @@ routes.use((req, res, next) => {
         return next()
     }
     req.flash('erro', ' Sem permissão para acessar essa página')
-    return res.redirect('/PoloUAB/home')
+    return res.redirect('/home')
 })
+    
 //rota para apagar 
 routes.post("/entrada-saida", online, (req, res) => {
     const { opcao, idUser, idHorario, mes, ano } = req.body
@@ -33,7 +34,7 @@ routes.post("/entrada-saida", online, (req, res) => {
         req.session.saida = false
     }
     HorarioBd.deleteHorarios(opcao, idHorario).then(dados => {
-        return res.redirect(`/polouab/adm/historico/${idUser}?mes=${mes}&ano=${ano}`)
+        return res.redirect(`/adm/historico/${idUser}?mes=${mes}&ano=${ano}`)
     }).catch(erro => {
         console.log(erro)
     })
@@ -81,9 +82,9 @@ routes.get("/pdf/:id", online, (req, res) => {
             FeriadosBd.getAll().then(feriadosAll => {
                 AusenciaBd.getUserId(req.params.id).then(ausenciaDados => {
                     FuncionarioBd.getFuncionarioId(req.params.id).then(funcionario => {
-                        const nome = funcionario.data[0].nome_completo
-                        const matricula = funcionario.data[0].matricula
-                        const cargo = funcionario.data[0].cargo
+                        const nome = funcionario.data.nome_completo
+                        const matricula = funcionario.data.matricula
+                        const cargo = funcionario.data.cargo
                         const ausencia = ausenciaDados.data
                         const horarios = dados.data
                         const feriados = feriadosAll.data
@@ -163,11 +164,11 @@ routes.get('/ausencia-excluir/:id', online, (req, res) => {
     AusenciaBd.delet(id).then(dados => {
         const msg = dados.data.msg
         req.flash('sucesso', 'Deletado com sucesso!')
-        return res.redirect('/PoloUAB/adm/usuarios')
+        return res.redirect('/adm/usuarios')
     }).catch(erro => {
         console.log(erro)
         req.flash('erro', 'Erro')
-        return res.redirect('/PoloUAB/adm/usuarios')
+        return res.redirect('/adm/usuarios')
     })
 })
 
@@ -182,7 +183,7 @@ routes.get("/cadastro", online, (req, res) => {
     })
 })
 
-routes.post("/cadastro", online, (req, res) => {
+routes.post("/cadastro", online,  (req, res) => {
     const saltRounds = 10;
     const senha = "123"
     const salt = bcrypt.genSaltSync(saltRounds);
@@ -192,18 +193,17 @@ routes.post("/cadastro", online, (req, res) => {
         const {
             data
         } = dados
-        console.log(data.mensagem)
-        if (data.mensagem) {
-            req.flash('sucesso', 'Cadastrado com sucesso')
-            return res.redirect("/PoloUAB/adm/cadastro")
+        if (data.alert) {
+            req.flash('sucesso', data.mensagem)
+            return res.redirect("/adm/cadastro")
         }
-
-        if (!data.mensagem) {
-            req.flash('erro', 'Essa matricula já esta registrada')
-            return res.redirect("/PoloUAB/adm/cadastro")
+        if(!data.alert){
+            req.flash('erro', data.mensagem)
+            return res.redirect("/adm/cadastro")
         }
+        
         req.flash('erro', 'Cadastro falhou')
-        res.redirect("/PoloUAB/adm/cadastro")
+        res.redirect("/adm/cadastro")
     })
 })
 
@@ -276,7 +276,7 @@ routes.post('/feriados', online, (req, res) => {
             data
         } = dados
         req.flash('sucesso', data.msg)
-        return res.redirect('/poloUAB/adm/horarios')
+        return res.redirect('/adm/horarios')
     }).catch(erro => {
         console.log(erro)
     })
@@ -288,7 +288,7 @@ routes.get('/feriados-excluir/:id', online, (req, res) => {
     FeriadosBd.delet(id).then(dados => {
         const msg = dados.data
         req.flash("sucesso", msg.msg)
-        return res.redirect("/poloUAB/adm/feriados")
+        return res.redirect("/adm/feriados")
     })
 
 })
@@ -299,7 +299,6 @@ routes.get("/horarios", online, (req, res) => {
         FuncionarioBd.getFuncionarios().then(dados => {
             const funcionario = dados.data
             const funcionarioAusentes = estruturaAusencia(ausencia)
-
             res.render("./admin/horarios.hbs", {
                 usersAusencia: funcionario,
                 dadosAusencia: funcionarioAusentes,
@@ -333,7 +332,7 @@ routes.post("/editar-horario", (req, res) => {
             break;
         default:
             req.flash('erro', 'Métodos de ausencia não foram selecionados Entrada/Saída')
-            return res.redirect('/PoloUAB/adm/horarios')
+            return res.redirect('/adm/horarios')
     }
 
     if (opcao) {
@@ -343,7 +342,7 @@ routes.post("/editar-horario", (req, res) => {
             } = dados
             if (data.mensagem) {
                 req.flash('sucesso', 'Horario editado!')
-                return res.redirect('/PoloUAB/adm/horarios')
+                return res.redirect('/adm/horarios')
             }
         })
     }
@@ -356,11 +355,11 @@ routes.post("/editar-horario", (req, res) => {
             } = dados
             if (data.mensagem) {
                 req.flash('sucesso', 'Horario editado!')
-                return res.redirect('/PoloUAB/adm/horarios')
+                return res.redirect('/adm/horarios')
             }
 
             req.flash('erro', 'Registro não encontrado')
-            return res.redirect('/PoloUAB/adm/horarios')
+            return res.redirect('/adm/horarios')
         })
     }
 
@@ -392,7 +391,7 @@ routes.post("/ausencia", (req, res) => {
             break;
         default:
             req.flash('erro', 'Métodos de ausencia não foram selecionados Férias/Atestado')
-            return res.redirect('/PoloUAB/adm/horarios')
+            return res.redirect('/adm/horarios')
     }
 
     AusenciaBd.createAusencia(
@@ -405,14 +404,14 @@ routes.post("/ausencia", (req, res) => {
         const {
             data
         } = dados
-
+        console.log(data)
         if (data.mensagem) {
-            req.flash('sucesso', 'Férias de ' + data.ausencia[0].nome_completo + ' registrada com sucesso!')
-            return res.redirect('/PoloUAB/adm/horarios')
+            req.flash('sucesso', data.ausencia.nome_completo + ' Registrado com sucesso!')
+            return res.redirect('/adm/horarios')
         }
 
         req.flash('erro', 'erro ao registrar férias')
-        return res.redirect('/PoloUAB/adm/horarios')
+        return res.redirect('/adm/horarios')
     })
 })
 
@@ -471,10 +470,10 @@ routes.post('/senha/:id', online, (req, res) => {
         const funcionario = dados.data
         if (funcionario.mensagem) {
             req.flash('sucesso', 'Senha Modificada!')
-            return res.redirect("/PoloUAB/adm/usuarios")
+            return res.redirect("/adm/usuarios")
         }
         req.flash('erro', 'Erro ao modificar senha')
-        return res.redirect("/PoloUAB/adm/usuarios")
+        return res.redirect("/adm/usuarios")
     })
 })
 
@@ -490,7 +489,7 @@ routes.get('/excluir/:id', online, (req, res) => {
         } = dados
         if (data.mensagem) {
             req.flash('sucesso', 'Usuário excluído!')
-            return res.redirect('/PoloUAB/adm/usuarios')
+            return res.redirect('/adm/usuarios')
         }
     })
 })

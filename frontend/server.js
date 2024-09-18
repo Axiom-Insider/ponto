@@ -56,7 +56,7 @@ const admin = require("./routes/administrador")
 
 
 app.use("/", funcionario);
-app.use("/administrador", admin);
+app.use("/adm", admin);
 
 
 app.listen(3030, ()=>{

@@ -1,35 +1,44 @@
+const { QueryTypes } = require("sequelize")
 const bd = require("./bd")
 
 
 
 const create = async ({data_entrada, data_saida, atestado, ferias, id_usuario})=>{
-    const sql = `INSERT INTO ausencia(atestado, ferias, data_entrada, data_saida, id_usuarios) VALUES('${atestado}', '${ferias}', '${data_entrada}','${data_saida || ''}', '${id_usuario}')`
 
-    const [ausencia] = await bd.query(sql)
+    try { 
+        const sql = `INSERT INTO ausencia(atestado, ferias, data_entrada, data_saida, id_usuarios) VALUES(?, ?, ?, ?, ?)`
+        const [ausencia] = await bd.query(sql,  {replacements:[atestado, ferias, data_entrada, data_saida || '', id_usuario], type: bd.QueryTypes.INSERT})
+        const sql2 = `SELECT * FROM usuarios WHERE matricula = '${id_usuario}'`
+        const [usuario] = await bd.query(sql2, {replacements:[id_usuario], type:bd.QueryTypes.SELECT})
+        return usuario
+    } catch (error) {
+        console.error('erro ao criar ausencia', error)
+        throw error
+    }
 
-    const sql2 = `SELECT nome_completo FROM usuarios WHERE matricula = '${id_usuario}'`
-    const [usuario] = await bd.query(sql2)
-
-    return usuario
 }
 
 const getUser = async ()=>{
-    const data = new Date()
-    const dataHoje = data.toLocaleDateString()
-    var dataBd 
-    var dataSeparadas
-    var ausencia = [] 
-    const sql = `SELECT * FROM ausencia JOIN usuarios ON ausencia.id_usuarios = usuarios.matricula`
-
-    const [result] = await bd.query(sql)
-
-    return result
+    try {
+        const sql = `SELECT * FROM ausencia JOIN usuarios ON ausencia.id_usuarios = usuarios.matricula`
+        const [result] = await bd.query(sql)
+        return result
+    } catch (error) {
+        console.error('erro ae puxar dados de usuarios na tabela de ausencia' , error)
+        throw error
+    }
 }
 
 const get = async ()=>{
-    const sql = `SELECT * FROM ausencia JOIN usuarios ON ausencia.id_usuarios = usuarios.matricula`
-    const [result] = await bd.query(sql)
-    return result
+    try {
+        const sql = `SELECT * FROM ausencia JOIN usuarios ON ausencia.id_usuarios = usuarios.matricula`
+        const [result] = await bd.query(sql)
+        return result
+    } catch (error) {
+        console.error('pegar ');
+        
+    }
+   
 }
 
 const getId = async (id)=>{

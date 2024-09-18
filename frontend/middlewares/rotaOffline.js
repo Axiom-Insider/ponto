@@ -1,7 +1,7 @@
 module.exports = (req, res, next)=>{
     
     if(req.session.user){
-        return res.redirect("/PoloUAB/Home")
+        return res.redirect("/home")
     }
     next()
 }

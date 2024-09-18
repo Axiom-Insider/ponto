@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="/css/usuario/historico.css">
 
+{{#if registro}}
+
 <form method="GET" id="form">
     <div class="row mt-4">
         <div class="col-auto">
@@ -18,14 +20,14 @@
         </div>
 </form>
 <div class="col-auto">
-    <form action="/PoloUAB/adm/pdf/{{id}}" method="get">
+    <form action="/adm/pdf/{{id}}" method="get">
         <input type="text" id="inv" value="{{anoAtual}}" name="ano">
         <input type="text" id="inv" value="{{mesAtual}}" name="mes">
         <button class="btn btn-primary" type="submit">Download Frequência <i
                 class="bi bi-file-earmark-arrow-down" id="donwload"></i></button>
     </form>
 </div>
-{{#if registro}}
+
 <div class="col-12">
     <table class="table table-bordered table-dark mt-4">
         <thead>
@@ -65,7 +67,7 @@
                 </td>
                 <td class="text-center">{{horasT}}{{totalH}}</td>
                 <td>
-                    <form id="form{{idHorario}}" action="/polouab/adm/entrada-saida" method="POST" >
+                    <form id="form{{idHorario}}" action="/adm/entrada-saida" method="POST" >
                         <input type="text" value="" id="inv" name="mes">
                         <input type="text" value="" id="inv" name="ano">
                         <input type="text" value="{{id}}" id="inv" name="idUser">

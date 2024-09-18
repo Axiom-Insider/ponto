@@ -4,8 +4,8 @@
     {{#each dadosAusencia}}
     <div class="alert alert-primary" id="alerta">
         <i class="bi bi-info-circle-fill"></i>
-        {{#if data_saida}} <strong>{{nome_completo}} | {{matricula}} | Entrada:{{data_entrada}} |
-            Volta:{{data_saida}}</strong> {{else}} <strong>{{nome_completo}} | {{matricula}} |
+        {{#if data_saida}} <strong>{{nome_completo}} | {{matricula}} | Entrada:{{data_entrada}} | 
+            Volta:{{data_saida}} </strong> {{else}} <strong>{{nome_completo}} | {{matricula}} |
             Entrada:{{data_entrada}}</strong> {{/if}}
     </div>
     {{/each}}
@@ -13,7 +13,7 @@
 
 
 <div class="box">
-    <form action="/PoloUAB/adm/editar-horario" method="post" class="row ">
+    <form action="/adm/editar-horario" method="post" class="row ">
         <h4>Editar Horário</h4>
         <div class="col-auto">
             <strong>Data:</strong><input type="date" name="data" id="calendario" class="form-control" required>
@@ -43,7 +43,7 @@
 
 
 <div class="box">
-    <form action="/PoloUAB/adm/feriados" method="post" class="row ">
+    <form action="/adm/feriados" method="post" class="row ">
         <h4>Feriados</h4>
         <div class="col-auto">
             <strong>Nome:</strong><input type="text" name="nome" id="nome" class="form-control" required>
@@ -66,7 +66,7 @@
 </div>
 
 <div class="box" id="boxFinal">
-    <form action="/PoloUAB/adm/ausencia" method="post" class="row ">
+    <form action="/adm/ausencia" method="post" class="row ">
         <h4>Ausência/Férias</h4>
         <div class="col-auto">
             <strong>Data de Entrada:</strong><input type="date" name="entrada" id="calendario" class="form-control"

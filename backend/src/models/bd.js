@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 require('dotenv').config();
 
-const sequelize = new Sequelize('ponto', process.env.USER, 'PoloUABlab',{
+const sequelize = new Sequelize('ponto','polo', 'PoloUABlab',{
     host:process.env.HOST,
     port:process.env.PORT,
     dialect:'mysql',

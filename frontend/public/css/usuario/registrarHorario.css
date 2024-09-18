@@ -20,7 +20,7 @@
   justify-content: center;
 }
 .modal-dialog{
-  background-color: white;
+  background-color: rgb(53, 53, 53);
 }
 .modal-content{
   background-color: #0948a7;
@@ -29,6 +29,14 @@
 #botao{
    width: 100px;
    margin-top: -5px;
+}
+
+
+#botaoCheck{
+  font-size: 20px;
+  border-radius: 100px;
+  width: 100px;
+  margin-top: -5px;
 }
 
 h4{
